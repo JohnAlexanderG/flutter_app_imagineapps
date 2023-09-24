@@ -14,4 +14,15 @@ class TasksType {
     required this.userId,
     required this.status,
   });
+
+  factory TasksType.fromJson(Map<String, dynamic> json) {
+    return TasksType(
+      id: json['id'],
+      title: json['title'],
+      description: json['description'],
+      dueDate: json['due_date'],
+      userId: json['user_id'],
+      status: json['status'],
+    );
+  }
 }

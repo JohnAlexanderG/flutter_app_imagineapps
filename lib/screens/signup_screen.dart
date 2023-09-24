@@ -99,7 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     prefs.setString('token', token);
 
                     // Navegar a la pantalla principal
-                    Navigator.pushNamed(context, '/login');
+                    Navigator.pushNamed(context, '/tasks');
                   }
                 },
               ),

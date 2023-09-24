@@ -17,6 +17,15 @@ class _LoginScreenState extends State<LoginScreen> {
   String _email = '';
   String _password = '';
 
+  void showErrorMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,15 +80,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   // Validar el formulario
                   if (_formKey.currentState!.validate()) {
                     // Enviar la petición al servicio de autenticación
-                    final token = await _authService.login(_email, _password);
+                    final getToken =
+                        await _authService.login(_email, _password);
 
-                    // Guardar el token en el almacenamiento local
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    prefs.setString('token', token);
-
-                    // Navegar a la pantalla principal
-                    Navigator.pushNamed(context, '/register');
+                    // Si el token es nulo, significa que hubo un error al iniciar sesión
+                    if (getToken['token'] == '') {
+                      showErrorMessage(
+                        'Las credenciales de inicio de sesión son incorrectas.',
+                      );
+                    } else {
+                      // Guardar el token en el almacenamiento local y navegar a la pantalla principal
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setString('token', getToken['token']!);
+                      Navigator.pushNamed(context, '/tasks');
+                    }
                   }
                 },
               ),

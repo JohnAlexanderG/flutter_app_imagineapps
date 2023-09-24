@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_imagineapps/screens/create_task_screen.dart';
 import 'package:flutter_app_imagineapps/screens/login_screen.dart';
 import 'package:flutter_app_imagineapps/screens/signup_screen.dart';
+import 'package:flutter_app_imagineapps/screens/task_details_screen.dart';
+import 'package:flutter_app_imagineapps/screens/tasks_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,6 +26,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
+        '/tasks': (context) => const TasksScreen(),
+        '/create-task': (context) => const CreateTaskScreen(),
+        '/edit-task': (context) => const TaskDetailScreen(),
       },
     );
   }

@@ -16,7 +16,6 @@ class AuthService {
     });
 
     final response = await http.post(url, headers: headers, body: body);
-    print(response.statusCode);
     if (response.statusCode == 201) {
       return response.body;
     } else {
@@ -24,7 +23,7 @@ class AuthService {
     }
   }
 
-  Future<String> login(String email, String password) async {
+  Future<Map<String, String>> login(String email, String password) async {
     Uri url = uri('users/login');
     final headers = {
       'Content-Type': 'application/json',
@@ -37,9 +36,10 @@ class AuthService {
     final response = await http.post(url, headers: headers, body: body);
 
     if (response.statusCode == 200) {
-      return response.body;
+      print(response.body);
+      return Map.from({'token': response.body});
     } else {
-      throw Exception('Error al iniciar sesión');
+      return Map.from({'token': ''});
     }
   }
 }
