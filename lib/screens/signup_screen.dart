@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_app_imagineapps/api/services/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
