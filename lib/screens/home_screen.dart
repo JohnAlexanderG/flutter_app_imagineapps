@@ -52,6 +52,19 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  String _getTaskStatus(int status) {
+    switch (status) {
+      case 1:
+        return 'Pendiente';
+      case 2:
+        return 'En progreso';
+      case 3:
+        return 'Completada';
+      default:
+        return 'Desconocido';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return [
@@ -92,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Estado: ${task['status']}'),
+                      Text('Estado: ${_getTaskStatus(task['status'])}'),
                       Text(
                           'Vencimiento: ${task['due_date'].toString().substring(0, 10)}'),
                       Text('${task['description']}'),
