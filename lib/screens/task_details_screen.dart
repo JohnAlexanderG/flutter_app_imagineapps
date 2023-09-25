@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_imagineapps/api/models/task_model.dart';
 import 'package:flutter_app_imagineapps/api/services/tasks_service.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class TaskDetailScreen extends StatefulWidget {
   const TaskDetailScreen({super.key});
@@ -197,14 +195,6 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                         ),
                       ),
                       onPressed: () async {
-                        final token =
-                            await SharedPreferences.getInstance().then((prefs) {
-                          return prefs.getString('token');
-                        });
-
-                        Map<String, dynamic> decodedToken =
-                            JwtDecoder.decode(token!);
-
                         // Validar el formulario
                         if (_formKey.currentState!.validate()) {
                           // Enviar la petición al servicio de autenticación
