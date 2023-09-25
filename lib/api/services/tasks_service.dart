@@ -94,4 +94,29 @@ class TasksService {
       throw Exception('Error al registrar el usuario');
     }
   }
+
+  Future<String> deleteTask(TasksType task) async {
+    final token = await SharedPreferences.getInstance().then((prefs) {
+      return prefs.getString('token');
+    });
+
+    final jsonToken = jsonDecode(token!);
+
+    Uri url = uri('users/deleteTask');
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${jsonToken['token']}',
+    };
+    final body = jsonEncode({
+      "id": task.id,
+    });
+
+    final response = await http.delete(url, headers: headers, body: body);
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body)['message'];
+    } else {
+      throw Exception('Error al registrar el usuario');
+    }
+  }
 }
