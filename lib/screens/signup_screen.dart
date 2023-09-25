@@ -18,20 +18,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String _email = '';
   String _password = '';
 
+  void showErrorMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign up'),
+        title: const Text('Signup'),
       ),
       body: Form(
         key: _formKey,
-        child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
           child: Column(
             children: [
               TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Nombre Completo',
+                decoration: InputDecoration(
+                  labelText: 'Nombre completo',
+                  labelStyle: const TextStyle(
+                    fontSize: 16,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -45,9 +61,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16),
               TextFormField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Correo electrónico',
+                  labelStyle: const TextStyle(
+                    fontSize: 16,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -61,9 +84,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16),
               TextFormField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Contraseña',
+                  labelStyle: const TextStyle(
+                    fontSize: 16,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                 ),
                 obscureText: true,
                 validator: (value) {
@@ -82,29 +112,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   return null;
                 },
               ),
+              const SizedBox(height: 32),
               ElevatedButton(
                 child: const Text('Registrarse'),
                 onPressed: () async {
                   // Validar el formulario
                   if (_formKey.currentState!.validate()) {
                     // Enviar la petición al servicio de autenticación
-                    final token =
+                    final getToken =
                         await _authService.register(_name, _email, _password);
 
                     // Guardar el token en el almacenamiento local
                     SharedPreferences prefs =
                         await SharedPreferences.getInstance();
-                    prefs.setString('token', token);
+                    prefs.setString('token', getToken['token']!);
+
+                    // Si el token es nulo, significa que hubo un error al iniciar sesión
+                    if (getToken['token'] == '') {
+                      showErrorMessage(
+                        'Las credenciales de inicio de sesión son incorrectas.',
+                      );
+                    } else {
+                      // Guardar el token en el almacenamiento local y navegar a la pantalla principal
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setString('token', getToken['token']!);
+                      Navigator.pushNamed(context, '/home');
+                    }
 
                     // Navegar a la pantalla principal
                     Navigator.pushNamed(context, '/home');
                   }
-                },
-              ),
-              ElevatedButton(
-                child: const Text('Iniciar sesión'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/login');
                 },
               ),
             ],

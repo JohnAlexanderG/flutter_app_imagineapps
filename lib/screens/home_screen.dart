@@ -69,37 +69,53 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         bottomNavigationBar: bottomNavigationBarSelect(),
-        body: ListView.builder(
-          itemCount: tasks.length,
-          itemBuilder: (context, index) {
-            final task = tasks[index];
-            return ListTile(
-              title: Text(task['title']),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Estado: ${task['status']}'),
-                  Text(
-                      'Vencimiento: ${task['due_date'].toString().substring(0, 10)}'),
-                  Text('${task['description']}'),
-                ],
-              ),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: () {
-                      // Navegar a la pantalla de edición de tareas
-                      Navigator.pushNamed(
-                        context,
-                        '/edit-task',
-                        arguments: task,
-                      );
-                    },
+        body: Builder(
+          builder: (context) {
+            if (tasks.isEmpty) {
+              return const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('No hay tareas', style: TextStyle(fontSize: 20)),
+                    Text('Cuando agregues una tarea aparecerá aquí',
+                        style: TextStyle(fontSize: 10)),
+                  ],
+                ),
+              );
+            }
+            return ListView.builder(
+              itemCount: tasks.length,
+              itemBuilder: (context, index) {
+                final task = tasks[index];
+                return ListTile(
+                  title: Text(task['title']),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Estado: ${task['status']}'),
+                      Text(
+                          'Vencimiento: ${task['due_date'].toString().substring(0, 10)}'),
+                      Text('${task['description']}'),
+                    ],
                   ),
-                ],
-              ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.edit),
+                        onPressed: () {
+                          // Navegar a la pantalla de edición de tareas
+                          Navigator.pushNamed(
+                            context,
+                            '/edit-task',
+                            arguments: task,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
             );
           },
         ),
@@ -127,8 +143,8 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.all(20),
           child: ListTile(
             leading: const Icon(Icons.person),
-            title: Text(_decodedToken['name']),
-            subtitle: Text(_decodedToken['email']),
+            title: Text(_decodedToken['name'] ?? ''),
+            subtitle: Text(_decodedToken['email'] ?? ''),
             trailing: Icon(Icons.verified_rounded,
                 color: Theme.of(context).primaryColor),
           ),
