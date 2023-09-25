@@ -215,15 +215,31 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                               // ignore: use_build_context_synchronously
                               // ? Navigator.pop(context)
                               // ignore: use_build_context_synchronously
-                              ? ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Se ha editado la tarea'),
+                              ? {
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return const TasksScreen();
+                                    }),
                                   ),
-                                )
+                                  // ignore: use_build_context_synchronously
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      backgroundColor: Colors.green,
+                                      content:
+                                          Text('Se ha actualizado la tarea'),
+                                    ),
+                                  )
+                                }
                               // ignore: use_build_context_synchronously
                               : ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                    content: Text('Error al crear la tarea'),
+                                    backgroundColor: Colors.red,
+                                    content: Text(
+                                      'Error al crear la tarea',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
                                   ),
                                 );
                         }
@@ -294,6 +310,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                   // ignore: use_build_context_synchronously
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
+                      backgroundColor: Colors.green,
                       content: Text('Se ha eliminado la tarea'),
                     ),
                   );
@@ -301,7 +318,11 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                   // ignore: use_build_context_synchronously
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text('Error al eliminar la tarea'),
+                      backgroundColor: Colors.red,
+                      content: Text(
+                        'Error al eliminar la tarea',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   );
                 }
