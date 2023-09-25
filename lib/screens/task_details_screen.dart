@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_imagineapps/api/models/task_model.dart';
 import 'package:flutter_app_imagineapps/api/services/tasks_service.dart';
-import 'package:flutter_app_imagineapps/screens/tasks_screen.dart';
+import 'package:flutter_app_imagineapps/screens/home_screen.dart';
 
 class TaskDetailScreen extends StatefulWidget {
   const TaskDetailScreen({super.key});
@@ -220,7 +220,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) {
-                                      return const TasksScreen();
+                                      return const HomeScreen();
                                     }),
                                   ),
                                   // ignore: use_build_context_synchronously
@@ -304,7 +304,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) {
-                      return const TasksScreen();
+                      return const HomeScreen();
                     }),
                   );
                   // ignore: use_build_context_synchronously

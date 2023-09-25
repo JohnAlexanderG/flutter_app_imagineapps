@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_imagineapps/api/models/task_model.dart';
 import 'package:flutter_app_imagineapps/api/services/tasks_service.dart';
-import 'package:flutter_app_imagineapps/screens/tasks_screen.dart';
+import 'package:flutter_app_imagineapps/screens/home_screen.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -199,7 +199,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) {
-                                  return const TasksScreen();
+                                  return const HomeScreen();
                                 }),
                               ),
                               // ignore: use_build_context_synchronously
