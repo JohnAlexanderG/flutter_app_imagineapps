@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_imagineapps/api/models/task_model.dart';
 import 'package:flutter_app_imagineapps/api/services/tasks_service.dart';
+import 'package:flutter_app_imagineapps/screens/tasks_screen.dart';
 
 class TaskDetailScreen extends StatefulWidget {
   const TaskDetailScreen({super.key});
@@ -234,7 +235,9 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                     ),
                     const SizedBox(height: 32),
                     TextButton(
-                      onPressed: () async {},
+                      onPressed: () {
+                        _showDialogDeleteTask(context, task);
+                      },
                       child: const Text(
                         'Eliminar tarea',
                         style: TextStyle(
@@ -248,6 +251,66 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<dynamic> _showDialogDeleteTask(
+      BuildContext context, Map<String, dynamic> task) {
+    return showDialog(
+      context: context,
+      builder: (builder) {
+        return AlertDialog(
+          title: const Text('Eliminar tarea'),
+          content: const Text('¿Estás seguro de eliminar la tarea?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () async {
+                final response = await TasksService().deleteTask(
+                  TasksType(
+                    id: task['id'],
+                    title: '',
+                    description: '',
+                    dueDate: '',
+                    status: 0,
+                  ),
+                );
+
+                if (response == 'Tarea eliminada') {
+                  // ignore: use_build_context_synchronously
+                  Navigator.pop(context);
+                  // ignore: use_build_context_synchronously
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return const TasksScreen();
+                    }),
+                  );
+                  // ignore: use_build_context_synchronously
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Se ha eliminado la tarea'),
+                    ),
+                  );
+                } else {
+                  // ignore: use_build_context_synchronously
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Error al eliminar la tarea'),
+                    ),
+                  );
+                }
+              },
+              child: const Text('Aceptar'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
