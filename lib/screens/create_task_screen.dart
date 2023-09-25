@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_imagineapps/api/models/task_model.dart';
 import 'package:flutter_app_imagineapps/api/services/tasks_service.dart';
+import 'package:flutter_app_imagineapps/screens/home_screen.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -193,12 +194,30 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                       );
 
                       response == 'Tarea creada'
-                          // ignore: use_build_context_synchronously
-                          ? Navigator.pop(context)
+                          ? {
+                              // ignore: use_build_context_synchronously
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) {
+                                  return const HomeScreen();
+                                }),
+                              ),
+                              // ignore: use_build_context_synchronously
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  backgroundColor: Colors.green,
+                                  content: Text('Se ha creado una nueva tarea'),
+                                ),
+                              )
+                            }
                           // ignore: use_build_context_synchronously
                           : ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('Error al crear la tarea'),
+                                backgroundColor: Colors.red,
+                                content: Text(
+                                  'Error al crear la tarea',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             );
                     }

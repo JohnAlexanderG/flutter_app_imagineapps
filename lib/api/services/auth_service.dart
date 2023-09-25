@@ -6,7 +6,8 @@ class AuthService {
 
   Uri uri(String path) => Uri.parse('$_baseUrl/$path');
 
-  Future<String> register(String name, String email, String password) async {
+  Future<Map<String, String>> register(
+      String name, String email, String password) async {
     Uri url = uri('users/register');
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({
@@ -17,7 +18,7 @@ class AuthService {
 
     final response = await http.post(url, headers: headers, body: body);
     if (response.statusCode == 201) {
-      return response.body;
+      return Map.from({'token': response.body});
     } else {
       throw Exception('Error al registrar el usuario');
     }
@@ -36,7 +37,6 @@ class AuthService {
     final response = await http.post(url, headers: headers, body: body);
 
     if (response.statusCode == 200) {
-      print(response.body);
       return Map.from({'token': response.body});
     } else {
       return Map.from({'token': ''});
