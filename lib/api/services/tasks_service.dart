@@ -65,4 +65,33 @@ class TasksService {
       throw Exception('Error al registrar el usuario');
     }
   }
+
+  Future<String> editTask(TasksType task) async {
+    final token = await SharedPreferences.getInstance().then((prefs) {
+      return prefs.getString('token');
+    });
+
+    final jsonToken = jsonDecode(token!);
+
+    Uri url = uri('users/editTask');
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${jsonToken['token']}',
+    };
+    final body = jsonEncode({
+      "id": task.id,
+      "title": task.title,
+      "description": task.description,
+      "due_date": task.dueDate,
+      "status": task.status
+    });
+
+    final response = await http.put(url, headers: headers, body: body);
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body)['message'];
+    } else {
+      throw Exception('Error al registrar el usuario');
+    }
+  }
 }
