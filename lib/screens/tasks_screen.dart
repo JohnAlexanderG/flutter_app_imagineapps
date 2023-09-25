@@ -88,7 +88,8 @@ class _TasksScreenState extends State<TasksScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Estado: ${task['status']}'),
-                Text('Vencimiento: ${task['dueDate']}'),
+                Text(
+                    'Vencimiento: ${task['due_date'].toString().substring(0, 10)}'),
                 Text('${task['description']}'),
               ],
             ),
