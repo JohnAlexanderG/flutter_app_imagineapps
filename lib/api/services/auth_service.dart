@@ -36,7 +36,6 @@ class AuthService {
     final response = await http.post(url, headers: headers, body: body);
 
     if (response.statusCode == 200) {
-      print(response.body);
       return Map.from({'token': response.body});
     } else {
       return Map.from({'token': ''});

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_imagineapps/screens/create_task_screen.dart';
+import 'package:flutter_app_imagineapps/screens/home_screen.dart';
 import 'package:flutter_app_imagineapps/screens/login_screen.dart';
 import 'package:flutter_app_imagineapps/screens/signup_screen.dart';
 import 'package:flutter_app_imagineapps/screens/task_details_screen.dart';
-import 'package:flutter_app_imagineapps/screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());

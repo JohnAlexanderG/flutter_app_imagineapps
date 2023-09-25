@@ -42,9 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
-      // tasks = data.map((task) => TasksType.fromJson(task)).toList();
       tasks = data;
-      // print('data: $data');
     } else {
       throw Exception('Error al obtener las tareas');
     }
