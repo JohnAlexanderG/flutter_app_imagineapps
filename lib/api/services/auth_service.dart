@@ -1,14 +1,17 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:uuid/uuid.dart';
 
 class AuthService {
+  var uuid = const Uuid().v4();
+
   final String _baseUrl = 'http://192.168.0.21:3080/api';
 
   Uri uri(String path) => Uri.parse('$_baseUrl/$path');
 
   Future<Map<String, String>> register(
       String name, String email, String password) async {
-    Uri url = uri('users/register');
+    Uri url = uri("users/register/$uuid");
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({
       'name': name,
@@ -16,7 +19,7 @@ class AuthService {
       'password': password,
     });
 
-    final response = await http.post(url, headers: headers, body: body);
+    final response = await http.put(url, headers: headers, body: body);
     if (response.statusCode == 201) {
       return Map.from({'token': response.body});
     } else {
