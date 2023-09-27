@@ -3,7 +3,7 @@ class TasksType {
   final String title;
   final String description;
   final String dueDate;
-  final int? userId;
+  final String? userId;
   final int status;
 
   TasksType({
